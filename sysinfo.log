@@ -1,0 +1,131 @@
+                          [35m[1mOperation System Information
+[33m[1m*******************************************************************************
+[35m[1mOS name:(B[m GNU/Linux
+[35m[1mKernel name:(B[m Linux
+[35m[1mKernel release:(B[m 4.15.0-139-generic
+[35m[1mKernel version:(B[m #143-Ubuntu SMP Tue Mar 16 01:30:17 UTC 2021
+[35m[1mArchitecture:(B[m x86_64
+[35m[1mManufacturer:(B[m Oracle Corporation
+[35m[1mProduct:(B[m VirtualBox
+[35m[1mProduct version:(B[m 1.2
+\n
+                          [35m[1mHost information
+[33m[1m*******************************************************************************
+[35m[1mHostname:(B[m junroo
+[35m[1mIP-adress:(B[m 127.0.1.1
+[35m[1mDNS:(B[m 
+DNS services in use:(B[m Global
+          DNSSEC NTA: 10.in-addr.arpa
+                      16.172.in-addr.arpa
+                      168.192.in-addr.arpa
+                      17.172.in-addr.arpa
+                      18.172.in-addr.arpa
+                      19.172.in-addr.arpa
+                      20.172.in-addr.arpa
+                      21.172.in-addr.arpa
+                      22.172.in-addr.arpa
+                      23.172.in-addr.arpa
+                      24.172.in-addr.arpa
+                      25.172.in-addr.arpa
+                      26.172.in-addr.arpa
+                      27.172.in-addr.arpa
+                      28.172.in-addr.arpa
+                      29.172.in-addr.arpa
+                      30.172.in-addr.arpa
+                      31.172.in-addr.arpa
+                      corp
+                      d.f.ip6.arpa
+                      home
+                      internal
+                      intranet
+                      lan
+                      local
+                      private
+                      test
+
+Link 2 (enp0s3)
+      Current Scopes: DNS
+       LLMNR setting: yes
+MulticastDNS setting: no
+      DNSSEC setting: no
+    DNSSEC supported: no
+         DNS Servers: 192.168.0.1
+          DNS Domain: ~.
+                          [35m[1mNetwork information
+[33m[1m*******************************************************************************
+[35m[1mIP information:(B[m 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute enp0s3
+       valid_lft 70655sec preferred_lft 70655sec
+[35m[1mPort statistics:(B[m Ip:
+    Forwarding: 2
+    1083 total packets received
+    1 with invalid addresses
+    0 forwarded
+    0 incoming packets discarded
+    1080 incoming packets delivered
+    1060 requests sent out
+Icmp:
+    0 ICMP messages received
+    0 input ICMP message failed
+    ICMP input histogram:
+    0 ICMP messages sent
+    0 ICMP messages failed
+    ICMP output histogram:
+Tcp:
+    65 active connection openings
+    0 passive connection openings
+    4 failed connection attempts
+    1 connection resets received
+    0 connections established
+    594 segments received
+    560 segments sent out
+    11 segments retransmitted
+    0 bad segments received
+    9 resets sent
+Udp:
+    484 packets received
+    0 packets to unknown port received
+    0 packet receive errors
+    491 packets sent
+    0 receive buffer errors
+    0 send buffer errors
+    IgnoredMulti: 6
+UdpLite:
+TcpExt:
+    13 TCP sockets finished time wait in fast timer
+    2 delayed acks sent
+    Quick ack mode was activated 1 times
+    235 packet headers predicted
+    58 acknowledgments not containing data payload received
+    89 predicted acknowledgments
+    7 congestion windows recovered without slow start after partial ack
+    TCPTimeouts: 11
+    1 connections reset due to early user close
+    TCPRcvCoalesce: 63
+    TCPAutoCorking: 7
+    TCPSynRetrans: 11
+    TCPOrigDataSent: 157
+IpExt:
+    InMcastPkts: 69
+    OutMcastPkts: 71
+    InBcastPkts: 6
+    OutBcastPkts: 6
+    InOctets: 935964
+    OutOctets: 93483
+    InMcastOctets: 6580
+    OutMcastOctets: 6660
+    InBcastOctets: 284
+    OutBcastOctets: 284
+    InNoECTPkts: 1618
+[35m[1mKernel IP routing table:(B[m Kernel IP routing table
+Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
+default         _gateway        0.0.0.0         UG        0 0          0 enp0s3
+10.0.2.0        0.0.0.0         255.255.255.0   U         0 0          0 enp0s3
+link-local      0.0.0.0         255.255.0.0     U         0 0          0 enp0s3
+[35m[1mKernel Interface table:(B[m Kernel Interface table
+Iface      MTU    RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg
+enp0s3    1500     1205      0      0 0           737      0      0      0 BMRU
+lo       65536      394      0      0 0           394      0      0      0 LRU
