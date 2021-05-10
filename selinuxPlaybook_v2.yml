@@ -1,0 +1,108 @@
+---
+- name: SELinux and setroubleshoot installation
+  hosts: all
+  become: yes
+
+  tasks:
+
+  - name: making directory for packages
+    file: 
+      state: directory 
+      path: /home/ec2-user/packages
+
+#to develope logic for downloading packages
+
+  - name: downloading packages
+    command: wget -P /home/ec2-user/packages/ {{ item }}
+    loop:
+      - http://mirror.centos.org/centos/7/os/x86_64/Packages/setroubleshoot-3.2.30-8.el7.x86_64.rpm
+      - http://mirror.centos.org/centos/7/os/x86_64/Packages/setroubleshoot-server-3.2.30-8.el7.x86_64.rpm
+      - http://mirror.centos.org/centos/7/os/x86_64/Packages/setroubleshoot-plugins-3.0.67-4.el7.noarch.rpm
+      - http://mirror.centos.org/centos/7/os/x86_64/Packages/libreport-2.1.11-53.el7.centos.x86_64.rpm
+      - http://mirror.centos.org/centos/7/os/x86_64/Packages/libreport-gtk-2.1.11-53.el7.centos.x86_64.rpm
+      - http://mirror.centos.org/centos/7/os/x86_64/Packages/libreport-plugin-reportuploader-2.1.11-53.el7.centos.x86_64.rpm
+      - http://mirror.centos.org/centos/7/os/x86_64/Packages/libreport-python-2.1.11-53.el7.centos.x86_64.rpm
+      - http://mirror.centos.org/centos/7/os/x86_64/Packages/libreport-web-2.1.11-53.el7.centos.x86_64.rpm
+      - http://mirror.centos.org/centos/7/os/x86_64/Packages/libreport-filesystem-2.1.11-53.el7.centos.x86_64.rpm
+    register: installed_pack
+    changed_when: '"\n0 saved" in installed_pack.stdout'
+
+
+  - name: SELinux installation
+    yum: 
+      name: "{{ item }}"
+      state: installed
+    loop:
+      - policycoreutils
+      - selinux-policy-targeted
+      - policycoreutils-python
+
+  - name: Find all rpm files in packages folder
+    find:
+     paths: "/home/ec2-user/packages"
+     patterns: "*.rpm"
+    register: package_files
+  
+  - name: Setting package_list
+    set_fact:
+     package_list: "{{ package_files.files | map(attribute='path') | list}}"
+
+  - name: setroubleshoot installation
+    yum:
+      name: "{{ package_list}}"
+      state: present
+
+#SELinux enforcing mode activation
+
+  - name: Replacing default console in grub
+    replace:
+      path: /etc/default/grub
+      regexp: 'console=tty0 console=ttyS0,115200n8' 
+      replace: 'console=ttyS0,115200n8 console=tty0 selinux=1 security=selinux enforcing=1'
+
+  - name: Removing old config file
+    file:
+      path: /etc/sysconfig/selinux
+      force: yes
+      state: absent
+
+  - name: Making symbolic link for new config file
+    file:
+      src: /etc/selinux/config
+      dest: /etc/sysconfig/selinux
+      state: link
+
+  - name: Changing selinux mode in config file
+    replace:
+      path: /etc/selinux/config
+      regexp: 'SELINUX=disabled' 
+      replace: 'SELINUX=enforcing'
+
+  - name: Automatic SELinux relabeling after reboot
+    command: touch /.autorelabel
+    args:
+     creates: /.autorelabel
+
+  - name: apply changes with grub
+    command: grub2-mkconfig -o /etc/grub2.cfg
+    register: grub
+    changed_when: '"\n0 done" in grub.stdout'
+    notify: 
+     - Restart server
+
+#########
+
+  - name: remove packages directory
+    file:
+     state: absent
+     path: /home/ec2-user/packages/     
+ 
+  handlers:
+   - name: Restart server
+     reboot:
+       msg: "Reboot initiated by Ansible"
+       connect_timeout: 5
+       reboot_timeout: 600
+       pre_reboot_delay: 0
+       post_reboot_delay: 30
+       test_command: whoami
